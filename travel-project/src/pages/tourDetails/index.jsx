@@ -69,7 +69,7 @@ function TourDetails() {
                                 </div>
                                 <div className="overview">
                                     <div className="section-detail">
-                                        <h3>Thông tin thêm về chuyến đi</h3>
+                                        <h3 className='title'>Thông tin thêm về chuyến đi</h3>
                                         <div className="overview-content">
                                             <div className="overview-content-item">
                                                 <img src={Map} alt="" />
