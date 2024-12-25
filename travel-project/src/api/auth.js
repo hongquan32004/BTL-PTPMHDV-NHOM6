@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = import.meta.env.VITE_APP_URL_BE;
+const baseUrl =
+    import.meta.env.VITE_APP_URL_BE;
 
 export const login = async (data) => {
     try {
@@ -10,24 +11,22 @@ export const login = async (data) => {
         } = data;
 
         const response = await axios.post(`${baseUrl}/auth/login`, {
-            email, password
-        },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'accept': 'application/json',
-                    // Nếu có token hoặc thông tin người dùng đã đăng nhập trước, bạn có thể thêm Authorization ở đây
-                    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-                }
-            })
-        const token = response?.data?.result?.accessToken;
-        console.log(token)
+            email,
+            password
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json',
+                // Nếu có token hoặc thông tin người dùng đã đăng nhập trước, bạn có thể thêm Authorization ở đây
+                'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+            }
+        })
+        const token = response.data.result.accessToken;
         if (token) {
             localStorage.setItem("accessToken", token);
         }
         return response.data;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         throw new Error('Đã có lỗi khi đăng nhập. Vui lòng thử lại!');
     }
@@ -50,8 +49,7 @@ export const register = async (data) => {
             phoneNumber
         })
         return response.data;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         throw new Error('Tạo tài khoản không thành công. Vui lòng thử lại!');
     }
@@ -59,16 +57,8 @@ export const register = async (data) => {
 
 export const logout = async () => {
     try {
-        const token = localStorage.getItem("accessToken");
-        if (!token) throw new Error("Token không tồn tại");
-
-        console.log(token);
         // Gửi yêu cầu GET tới API logout
-        await axios.get(`${baseUrl}/auth/logout`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        await axios.get(`${baseUrl}/auth/logout`);
 
         // Xóa token khỏi localStorage
         localStorage.removeItem("accessToken");

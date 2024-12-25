@@ -2,7 +2,6 @@
 import axios from 'axios';
 
 
-
 const baseURL =
     import.meta.env.VITE_APP_URL_BE;
 
@@ -15,30 +14,22 @@ const createAxiosInstance = (baseURL, headers = {}) => {
             ...headers,
         },
     });
-
-    // Intercept request to attach token
-    instance.interceptors.request.use((config) => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    }, (error) => {
-        return Promise.reject(error);
-    });
-
     return instance;
 };
 
 
 // Instance dùng cho JSON
-const axiosInstance = createAxiosInstance(baseURL, {
-    'Content-Type': 'application/json'
+const token = localStorage.getItem('accessToken');
+// console.log(token);
+
+const axiosInstanceUser = createAxiosInstance(baseURL, {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token
 });
 
 
 // Instance dùng cho form data
-const axiosInstanceForm = createAxiosInstance(baseURL);
+const axiosInstance = createAxiosInstance(baseURL);
 
 
 // Hàm xử lý lỗi chung
@@ -46,6 +37,27 @@ const handleError = (error) => {
     console.error('Error:', error.response || error.message);
     throw error;
 };
+
+
+// User Profile
+const getUser = async (path) => {
+    try {
+        const response = await axiosInstanceUser.get(`/${path}`);
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};
+// Phương thức POST
+const postUser = async (path, data) => {
+    try {
+        const response = await axiosInstanceUser.post(`/${path}`, data);
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};
+
 
 // Phương thức GET
 
@@ -71,7 +83,7 @@ const post = async (path, data) => {
 // Phương thức POST
 const postForm = async (path, data) => {
     try {
-        const response = await axiosInstanceForm.post(`/${path}`, data);
+        const response = await axiosInstance.post(`/${path}`, data);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -91,7 +103,7 @@ const patch = async (path, data) => {
 // Phương thức PATCH với form data
 const patchForm = async (path, data) => {
     try {
-        const response = await axiosInstanceForm.patch(`/${path}`, data);
+        const response = await axiosInstance.patch(`/${path}`, data);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -117,5 +129,7 @@ export {
     postForm,
     patch,
     patchForm,
-    deleteMethod
+    deleteMethod,
+    getUser,
+    postUser
 };
