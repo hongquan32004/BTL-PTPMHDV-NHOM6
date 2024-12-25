@@ -17,7 +17,7 @@ function Header() {
                         <li><a href="https://vietravelmice.com/">Vietravel Mice</a></li>
                         <li><a href="https://vietravelplus.com/">Vietravel Loyalty</a></li>
                         <li><a href="https://travel.com.vn/lien-he.aspx">Liên hệ</a></li>
-                        <li><i className="fa-solid fa-user" onClick={() => navigate('/login')}></i></li>
+                        <li><i className="fa-solid fa-user" onClick={() => navigate('/user')}></i></li>
                     </ul>
                 </nav>
             </div>

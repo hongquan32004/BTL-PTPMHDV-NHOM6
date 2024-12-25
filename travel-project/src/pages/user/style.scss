@@ -1,0 +1,297 @@
+.user {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+
+    .user-page {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 0 5rem;
+        width: 100%;
+
+        .user-page-header {
+            width: 85% !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .user-header-back {
+                width: 100%;
+
+                .back-button {
+                    background: transparent;
+                    border: none;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    gap: .5rem;
+                    font-size: 1rem;
+                    font-weight: 500;
+
+                    span {
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                font-weight: 650;
+                margin-top: 2rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                color: #0b5da7;
+            }
+        }
+
+        .user-content {
+            flex-direction: row;
+            align-items: stretch;
+            gap: 3rem;
+            display: flex;
+            justify-content: center;
+            width: 85% !important;
+
+            .sidebar {
+                width: 30%;
+                position: relative;
+
+                .user-left-sidebar {
+                    max-width: 30rem;
+                    padding: 2rem;
+                    border: 1px solid #e5e5e5;
+                    border-radius: .5rem;
+
+                    .user-left-sidebar-top {
+                        overflow: clip;
+                        border-bottom: 1px solid #e5e5e5;
+                        padding-bottom: 2rem;
+
+                        .row {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            align-items: flex-start;
+                            gap: 2rem;
+
+                            img {
+                                border-radius: 50%;
+                                width: 50px;
+                            }
+                        }
+                    }
+
+                    .user-left-sidebar-body {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        padding-top: 2rem;
+                        overflow-x: hidden;
+                        align-items: flex-start;
+                        gap: .8rem;
+
+                        .user-list {
+                            align-items: flex-end;
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+
+                            .active-sidebar {
+                                text-decoration: none;
+                                font-size: 1.2rem;
+                                border: none;
+                                background: none;
+                                width: 100%;
+                                text-align: left;
+                                cursor: pointer;
+                                outline: none;
+                                padding: 0.7rem 0;
+                                display: flex;
+                                align-items: center;
+                                gap: .8rem;
+                            }
+
+                            .dropdown-container {
+                                width: 90%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: flex-start;
+                                align-items: flex-start;
+
+                                .active-sidebar {
+                                    font-size: 1.2rem;
+                                    text-decoration: none;
+                                    border: none;
+                                    background: none;
+                                    width: 100%;
+                                    text-align: left;
+                                    cursor: pointer;
+                                    outline: none;
+                                    padding: 1rem 0;
+                                    display: flex;
+                                    align-items: center;
+                                    gap: .8rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .content {
+                width: 80%;
+
+                .account-info {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+
+                    .account-wrapper {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        gap: 2rem;
+                        width: 100%;
+
+                        .account-right-info {
+                            margin-bottom: 6rem;
+                            flex-grow: 1;
+                            padding: 2rem;
+                            border: 1px solid #e5e5e5;
+                            border-radius: .5rem;
+
+                            .ac-top {
+                                padding-bottom: 2rem;
+                                margin-bottom: 2rem;
+                                border-bottom: 1px solid #e5e5e5;
+
+                                h4 {
+                                    color: #171717;
+                                    font-size: 1.4rem;
+                                    font-weight: 650;
+                                }
+
+                                p {
+                                    font-size: 1.2rem;
+                                    font-weight: 500;
+                                    margin: 0;
+                                }
+                            }
+
+                            .ac-body {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+
+                                .item {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    border-bottom: 1px solid #e5e5e5;
+                                    padding-bottom: 1.5rem;
+                                    margin-bottom: 1.5rem;
+                                    font-size: 1.2rem;
+                                    font-weight: 500;
+                                    gap: 1rem;
+
+                                    .left {
+                                        flex: 0 0 25%;
+                                        max-width: 30rem;
+                                        text-wrap: nowrap;
+                                    }
+
+                                    .right {
+                                        flex-grow: 3;
+                                        text-align: left;
+                                        margin-right: 2rem;
+
+                                        .info-form {
+                                            align-items: center;
+                                            justify-content: space-between;
+                                            width: 100%;
+                                            display: flex;
+                                            flex-direction: row;
+                                            gap: 2rem;
+
+                                            button {
+                                                border: none;
+                                                outline: none;
+                                                background: transparent;
+                                                margin-right: 2rem;
+                                                flex-grow: 5;
+                                                text-align: right;
+                                            }
+                                        }
+
+                                        .edit-form {
+                                            // margin-top: 1.6rem;
+                                            // display: none;
+
+                                            label {
+                                                display: block;
+                                                font-size: 1rem;
+                                                font-weight: 700;
+                                            }
+
+                                            input {
+                                                width: 100%;
+                                                border: none;
+                                                outline: none;
+                                                background: transparent;
+                                                padding: 0;
+                                                margin-top: .8rem;
+                                                margin-bottom: 1.3rem;
+                                                font-weight: 500;
+                                                font-size: 14px !important;
+                                            }
+
+                                            .btn-group {
+                                                display: flex;
+                                                justify-content: flex-end;
+                                                gap: .8rem;
+
+                                                .btn-cancel {
+                                                    color: #004476;
+                                                    background: transparent;
+                                                    font-size: 1rem;
+                                                    font-weight: 700;
+                                                    padding: 0.7rem 1.5rem;
+                                                    border: 1px solid #004476;
+                                                    border-radius: .5rem;
+                                                    cursor: pointer;
+                                                }
+
+                                                .save {
+                                                    color: white;
+                                                    background: #004476;
+                                                    font-size: 1rem;
+                                                    font-weight: 700;
+                                                    padding: 0.7rem 1.5rem;
+                                                    border: 1px solid #004476;
+                                                    border-radius: .5rem;
+                                                    cursor: pointer;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -16,11 +16,17 @@ import Slider3 from '../../assets/images/slider3.png'
 import Slider4 from '../../assets/images/slider4.png'
 import Slider5 from '../../assets/images/slider5.png'
 import './style.scss'
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const images = [Slider1, Slider2, Slider3, Slider4, Slider5];
     const [reverse, setReverse] = useState(false);
     const sliderRef = useRef(null);
+    const navigate = useNavigate();
+
+    const handleNavigate = (slug) => {
+        navigate(`/tours/${slug}`)
+    }
 
     const settings = {
         dots: true,
@@ -136,36 +142,33 @@ function Home() {
                 <div className="select-tour-container">
                     <div className="select-tour-button">
                         <div className="stb-list">
-                            <button><img src={TourTet} alt="" /></button>
+                            <button onClick={() => handleNavigate('tet')}><img src={TourTet} alt="" /></button>
                             <p>TOUR <br />TẾT</p>
                         </div>
                         <div className="stb-list">
-                            <button><img src={Dimond} alt="" /></button>
+                            <button onClick={() => handleNavigate('du-lich-cao-cap')}><img src={Dimond} alt="" /></button>
                             <p>TOUR <br />CAO CẤP</p>
                         </div>
                         <div className="stb-list">
-                            <button><img src={TieuChuan} alt="" /></button>
+                            <button onClick={() => handleNavigate('du-lich-tieu-chuan')}><img src={TieuChuan} alt="" /></button>
                             <p>TOUR <br />TIÊU CHUẨN</p>
                         </div>
                         <div className="stb-list">
-                            <button><img src={TietKiem} alt="" /></button>
+                            <button onClick={() => handleNavigate('du-lich-tiet-kiem')}><img src={TietKiem} alt="" /></button>
                             <p>TOUR <br />TIẾT KIỆM</p>
                         </div>
                         <div className="stb-list">
-                            <button><img src={GiaTot} alt="" /></button>
+                            <button onClick={() => handleNavigate('du-lich-gia-tot')}><img src={GiaTot} alt="" /></button>
                             <p>TOUR <br />GIA TỐT</p>
                         </div>
                     </div>
                     <Slider {...settings} ref={sliderRef}>
-
                         {images.map((image, key) => (
                             <div className='each-slider' key={key}>
                                 <img src={image} alt="" />
                             </div>
                         ))}
-
                     </Slider>
-
                 </div>
             </div>
         </div>

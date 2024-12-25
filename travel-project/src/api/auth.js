@@ -11,8 +11,17 @@ export const login = async (data) => {
 
         const response = await axios.post(`${baseUrl}/auth/login`, {
             email, password
-        })
-        const token = response.data.result.accessToken;
+        },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    // Nếu có token hoặc thông tin người dùng đã đăng nhập trước, bạn có thể thêm Authorization ở đây
+                    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+                }
+            })
+        const token = response?.data?.result?.accessToken;
+        console.log(token)
         if (token) {
             localStorage.setItem("accessToken", token);
         }
@@ -45,5 +54,28 @@ export const register = async (data) => {
     catch (error) {
         console.log(error);
         throw new Error('Tạo tài khoản không thành công. Vui lòng thử lại!');
+    }
+}
+
+export const logout = async () => {
+    try {
+        const token = localStorage.getItem("accessToken");
+        if (!token) throw new Error("Token không tồn tại");
+
+        console.log(token);
+        // Gửi yêu cầu GET tới API logout
+        await axios.get(`${baseUrl}/auth/logout`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        // Xóa token khỏi localStorage
+        localStorage.removeItem("accessToken");
+
+        console.log('Đăng xuất thành công');
+    } catch (error) {
+        console.error('Lỗi khi đăng xuất', error);
+        throw new Error('Đã có lỗi khi đăng xuất. Vui lòng thử lại!');
     }
 }
