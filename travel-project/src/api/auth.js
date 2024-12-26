@@ -22,6 +22,7 @@ export const login = async (data) => {
             }
         })
         const token = response.data.result.accessToken;
+
         if (token) {
             localStorage.setItem("accessToken", token);
         }

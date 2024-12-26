@@ -28,7 +28,7 @@ const axiosInstanceUser = createAxiosInstance(baseURL, {
 });
 
 
-// Instance dùng cho form data
+// Instance dùng chung
 const axiosInstance = createAxiosInstance(baseURL);
 
 
@@ -52,6 +52,16 @@ const getUser = async (path) => {
 const postUser = async (path, data) => {
     try {
         const response = await axiosInstanceUser.post(`/${path}`, data);
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};
+
+// Phương thức PATCH
+const patchUser = async (path, data) => {
+    try {
+        const response = await axiosInstanceUser.patch(`/${path}`, data);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -131,5 +141,6 @@ export {
     patchForm,
     deleteMethod,
     getUser,
-    postUser
+    postUser,
+    patchUser
 };

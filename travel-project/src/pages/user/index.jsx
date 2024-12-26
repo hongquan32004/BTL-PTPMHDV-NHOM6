@@ -4,14 +4,17 @@ import { useState, useEffect, useRef } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { logout } from "../../api/auth";
 import { message } from "antd";
-import { getUser } from "../../utils/axios-http/axios-http";
+import { getUser, patch, patchUser } from "../../utils/axios-http/axios-http";
 
 function User() {
   const navigate = useNavigate();
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -23,10 +26,31 @@ function User() {
       message.error("Đăng xuất thất bại");
     }
   };
+
+  const handleEditUser = async () => {
+    try {
+      const data = {
+        fullName: name,
+        phoneNumber: phone,
+        address: address,
+      };
+      await patchUser(`user/update`, data);
+      message.success("Cập nhật thông tin thành công!");
+      setIsEditingName(false);
+      setIsEditingPhone(false);
+      setIsEditingAddress(false);
+    } catch (error) {
+      console.log(error);
+      message.error("Cập nhật thông tin thất bại!");
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       const response = await getUser("user/profile");
       setUser(response);
+      setName(response.user.fullName);
+      setPhone(response.user.phoneNumber);
+      setAddress(response.user.address);
     };
     fetchData();
   }, []);
@@ -67,11 +91,23 @@ function User() {
                     <button className="active-sidebar">
                       Thông tin cá nhân
                     </button>
-                    <button className="active-sidebar">Đổi mật khẩu</button>
+                    <button
+                      className="active-sidebar"
+                      onClick={() => {
+                        navigate("/user/change-password");
+                      }}
+                    >
+                      Đổi mật khẩu
+                    </button>
                     <button className="active-sidebar" onClick={handleLogout}>
                       Đăng xuất
                     </button>
-                    <button className="active-sidebar">
+                    <button
+                      className="active-sidebar"
+                      onClick={() => {
+                        navigate("/user/delete-user");
+                      }}
+                    >
                       Yêu cầu xóa tài khoản
                     </button>
                   </div>
@@ -101,7 +137,7 @@ function User() {
                       <div className="right">
                         {!isEditingName ? (
                           <div className="info-form">
-                            Quân Trần Hồng
+                            {name}
                             <button>
                               <i
                                 className="fa-solid fa-pen"
@@ -113,7 +149,14 @@ function User() {
                         ) : (
                           <div className="edit-form">
                             <label htmlFor="">Họ tên</label>
-                            <input type="text" placeholder="Nhập tên mới" />
+                            <input
+                              type="text"
+                              placeholder="Nhập tên mới"
+                              value={name}
+                              onChange={(e) => {
+                                setName(e.target.value);
+                              }}
+                            />
                             <div className="btn-group">
                               <button
                                 className="btn-cancel"
@@ -122,7 +165,14 @@ function User() {
                               >
                                 Hủy
                               </button>
-                              <button className="save">Lưu</button>
+                              <button
+                                className="save"
+                                onClick={() => {
+                                  handleEditUser();
+                                }}
+                              >
+                                Lưu
+                              </button>
                             </div>
                           </div>
                         )}
@@ -133,7 +183,7 @@ function User() {
                       <div className="right">
                         {!isEditingPhone ? (
                           <div className="info-form">
-                            0943141560
+                            {phone}
                             <button>
                               <i
                                 className="fa-solid fa-pen"
@@ -148,6 +198,8 @@ function User() {
                             <input
                               type="text"
                               placeholder="Nhập số điện thoại"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
                             />
                             <div className="btn-group">
                               <button
@@ -156,7 +208,14 @@ function User() {
                               >
                                 Hủy
                               </button>
-                              <button className="save">Lưu</button>
+                              <button
+                                className="save"
+                                onClick={() => {
+                                  handleEditUser();
+                                }}
+                              >
+                                Lưu
+                              </button>
                             </div>
                           </div>
                         )}
@@ -164,14 +223,14 @@ function User() {
                     </div>
                     <div className="item">
                       <div className="left">Email</div>
-                      <div className="right">thquan1103@gmail.com</div>
+                      <div className="right">{user?.user?.email}</div>
                     </div>
                     <div className="item">
                       <div className="left">Địa chỉ</div>
                       <div className="right">
                         {!isEditingAddress ? (
                           <div className="info-form">
-                            Hà Tĩnh
+                            {address}
                             <button>
                               <i
                                 className="fa-solid fa-pen"
@@ -183,7 +242,14 @@ function User() {
                         ) : (
                           <div className="edit-form">
                             <label htmlFor="">Địa chỉ: </label>
-                            <input type="text" placeholder="Nhập địa chỉ" />
+                            <input
+                              type="text"
+                              placeholder="Nhập địa chỉ"
+                              value={address}
+                              onChange={(e) => {
+                                setAddress(e.target.value);
+                              }}
+                            />
                             <div className="btn-group">
                               <button
                                 className="btn-cancel"
@@ -191,7 +257,12 @@ function User() {
                               >
                                 Hủy
                               </button>
-                              <button className="save">Lưu</button>
+                              <button
+                                className="save"
+                                onClick={() => handleEditUser()}
+                              >
+                                Lưu
+                              </button>
                             </div>
                           </div>
                         )}
