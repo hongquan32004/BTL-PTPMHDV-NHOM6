@@ -76,7 +76,6 @@ function Tour() {
     const tourLine = params.get("tourLine");
     const transTypeId = params.get("transTypeId");
     const departureFrom = params.get("departureFrom");
-
     setSelectedBudget(budgetId);
     setSelectedCategory(tourLine);
     setSelectedTransportation(transTypeId);
@@ -426,3 +425,4 @@ function Tour() {
 }
 
 export default Tour;
+
