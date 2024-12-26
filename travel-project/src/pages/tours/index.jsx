@@ -131,7 +131,7 @@ function Tour() {
                         </div>
                         <div className="find-tour-content-list-main">
                             {tours.map((item, key) => (
-                                <div key={key} className="card-filter-desktop">
+                                <div key={key} className="card-filter-desktop" onClick={() => navigate(`/tour-details/${item.slug}`)}>
                                     <div className="card-filter-thumbnail">
                                         <img src={item.image} alt="" />
                                     </div>

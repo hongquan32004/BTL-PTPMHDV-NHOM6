@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './style.scss'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { get } from '../../utils/axios-http/axios-http';
-import { Calendar } from 'antd';
+import { Calendar, Collapse, theme } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { motion } from 'framer-motion';
+import ImageSlider from './imageSlider';
 import Map from '../../assets/images/map.png'
 import Eat from '../../assets/images/eat.png'
 import Friend from '../../assets/images/friend.png'
@@ -15,9 +18,13 @@ import Calenda from '../../assets/images/celanda.png'
 import Time2 from '../../assets/images/time.png'
 import Concho from '../../assets/images/concho.png'
 
+const { Panel } = Collapse;
+
 function TourDetails() {
     const { slug } = useParams();
     const [tourDetails, setTourDetails] = useState([]);
+    const [showImageSlider, setShowImageSlider] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,10 +32,26 @@ function TourDetails() {
             setTourDetails(response);
         }
         fetchData();
-    }, slug);
+    }, [slug]);
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
+    const { token } = theme.useToken();
+    const panelStyle = {
+        marginBottom: 22,
+        background: token.colorFillAlter,
+        borderRadius: token.borderRadiusLG,
+        border: 'none',
+    };
+    const scheduleItems =
+        tourDetails?.tour?.schedule?.map((item) => ({
+            key: item.id,
+            label: `Ngày ${item.day}: ${item.title}`,
+            children: <p>{item.information}</p>,
+            style: panelStyle
+        })) || [];
+
+
     return (
         <div className='tour-details'>
             <div className="tour-details-main">
@@ -36,7 +59,7 @@ function TourDetails() {
                     <div className="tour-details-header">
                         <div className="tour-header-content">
                             <div className="breadcrumb-container">
-                                <p className='p1'>Du lịch / </p>
+                                <p className='p1' style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>Du lịch / </p>
                                 <p className='p2'> {tourDetails?.tour?.title}</p>
                             </div>
                             <h2>{tourDetails?.tour?.title}</h2>
@@ -49,12 +72,12 @@ function TourDetails() {
                                     <div className="image-gallery-wrapper">
                                         <div className="image-thumbnails" >
                                             {tourDetails?.tour?.images?.map((item, key) => (
-                                                <div className="thumnails-animate" key={key}>
+                                                <div className="thumnails-animate" onClick={() => setShowImageSlider(true)} key={key}>
                                                     <img src={item.source} alt="" />
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="image-main">
+                                        <div className="image-main" onClick={() => setShowImageSlider(true)}>
                                             <img src={tourDetails?.tour?.images?.[0]?.source} alt="" />
                                         </div>
                                     </div>
@@ -102,6 +125,20 @@ function TourDetails() {
                                                 <p>{tourDetails?.tour?.information?.promotion}</p>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div className="schedule">
+                                    <div className="section-detail">
+                                        <h3 className='title'>
+                                            Lịch trình
+                                        </h3>
+                                        <Collapse className='collapse' items={scheduleItems} accordion style={{ width: '100%', margin: 'auto', background: token.colorBgContainer }}
+                                            bordered={false}
+                                            defaultActiveKey={[]}
+                                            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+
+                                        >
+                                        </Collapse>
                                     </div>
                                 </div>
                             </div>
@@ -178,6 +215,20 @@ function TourDetails() {
                     </div>
                 </div>
             </div>
+            {showImageSlider && (
+                <div className='overlay' onClick={() => setShowImageSlider(false)}>
+                    <motion.div
+                        className='note-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <ImageSlider image={tourDetails?.tour?.images} onCancel={() => setShowImageSlider(false)} />
+                    </motion.div>
+                </div>
+            )}
         </div>
     )
 }
