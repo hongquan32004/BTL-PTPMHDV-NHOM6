@@ -10,6 +10,7 @@ import User from "./pages/user";
 import TourDetails from "./pages/tourDetails";
 import ChangePassword from "./pages/user/change-password";
 import DeleteUser from "./pages/user/delete-user";
+import Order from "./pages/order";
 
 function App() {
   const routes = useRoutes([
@@ -49,6 +50,10 @@ function App() {
           path: "/tour-details/:slug",
           element: <TourDetails />,
         },
+        {
+          path: '/order',
+          element: <Order />
+        }
       ],
     },
   ]);

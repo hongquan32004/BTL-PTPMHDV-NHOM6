@@ -24,15 +24,29 @@ function TourDetails() {
     const { slug } = useParams();
     const [tourDetails, setTourDetails] = useState([]);
     const [showImageSlider, setShowImageSlider] = useState(false);
+    const [departureDates, setDepartureDates] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await get(`tours/detail/${slug}`)
             setTourDetails(response);
+            const dates = response?.tour?.tourDetail?.map(detail => detail.dayStart) || [];
+            setDepartureDates(dates);
         }
         fetchData();
     }, [slug]);
+    const dateCellRender = (value) => {
+        const formattedDate = value.format('YYYY-MM-DD');
+        if (departureDates.includes(formattedDate)) {
+            return (
+                <div style={{ textAlign: 'center', color: '#fff', backgroundColor: '#1890ff', borderRadius: '50%' }}>
+                    Ngày khởi hành
+                </div>
+            );
+        }
+        return null;
+    };
     const onPanelChange = (value, mode) => {
         console.log(value.format('YYYY-MM-DD'), mode);
     };
@@ -86,7 +100,7 @@ function TourDetails() {
                                     <div className="section-detail">
                                         <h3>Lịch khởi hành</h3>
                                         <div className="calendar">
-                                            <Calendar onPanelChange={onPanelChange} />
+                                            <Calendar dateCellRender={dateCellRender} />
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +150,6 @@ function TourDetails() {
                                             bordered={false}
                                             defaultActiveKey={[]}
                                             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-
                                         >
                                         </Collapse>
                                     </div>
@@ -192,7 +205,7 @@ function TourDetails() {
                                         </div>
                                         <div className="book-tour-option">
                                             <button className='btn-advise'>Ngày khác</button>
-                                            <button className='btn-bookTour'>
+                                            <button className='btn-bookTour' onClick={() => navigate('/order', { state: { tourDetails } })}>
                                                 Đặt tour
                                             </button>
                                         </div>

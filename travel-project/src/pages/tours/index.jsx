@@ -157,9 +157,8 @@ function Tour() {
                 </div>
                 <div className="list">
                   <div
-                    className={`list-item ${
-                      selectedBudget === 1 ? "btn-active" : ""
-                    }`}
+                    className={`list-item ${selectedBudget === 1 ? "btn-active" : ""
+                      }`}
                     onClick={() => {
                       handleAddSearchParam("budgetId", 1);
                       setSelectedBudget(1);
@@ -168,9 +167,8 @@ function Tour() {
                     Dưới 5 triệu
                   </div>
                   <div
-                    className={`list-item ${
-                      selectedBudget === 2 ? "btn-active" : ""
-                    }`}
+                    className={`list-item ${selectedBudget === 2 ? "btn-active" : ""
+                      }`}
                     onClick={() => {
                       handleAddSearchParam("budgetId", 2);
                       setSelectedBudget(2);
@@ -179,9 +177,8 @@ function Tour() {
                     Từ 5 đến 10 triệu
                   </div>
                   <div
-                    className={`list-item ${
-                      selectedBudget === 3 ? "btn-active" : ""
-                    }`}
+                    className={`list-item ${selectedBudget === 3 ? "btn-active" : ""
+                      }`}
                     onClick={() => {
                       handleAddSearchParam("budgetId", 3);
                       setSelectedBudget(3);
@@ -190,9 +187,8 @@ function Tour() {
                     Từ 10 - 20 triệu
                   </div>
                   <div
-                    className={`list-item ${
-                      selectedBudget === 4 ? "btn-active" : ""
-                    }`}
+                    className={`list-item ${selectedBudget === 4 ? "btn-active" : ""
+                      }`}
                     onClick={() => {
                       handleAddSearchParam("budgetId", 4);
                       setSelectedBudget(4);
@@ -208,7 +204,8 @@ function Tour() {
                 </div>
                 <div className="select-container">
                   <Select
-                    style={{ width: 200, marginRight: 10 }}
+                    className="button"
+                    // style={{ width: 200, marginRight: 10 }}
                     placeholder="Chọn điểm khởi hành"
                     onChange={(value) => {
                       handleAddSearchParam("departureFrom", value);
@@ -229,7 +226,8 @@ function Tour() {
                 </div>
                 <div className="select-container">
                   <Select
-                    style={{ width: 200, marginRight: 10 }}
+                    className="button"
+                    // style={{ width: 200, marginRight: 10 }}
                     placeholder="Chọn điểm khởi hành"
                     onChange={(value) => {
                       navigate(`/tours/${value}`);
@@ -348,7 +346,7 @@ function Tour() {
             </div>
             <div className="find-tour-content-list-main">
               {tours.map((item, key) => (
-                <div key={key} className="card-filter-desktop">
+                <div key={key} className="card-filter-desktop" onClick={() => navigate(`/tour-details/${item.slug}`)}>
                   <div className="card-filter-thumbnail">
                     <img src={item.image} alt="" />
                   </div>
